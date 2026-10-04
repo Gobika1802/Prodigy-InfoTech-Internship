@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Caesar Cipher</title>
+
+    <!-- CSS File -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <!-- =========================
+                 TITLE
+            ========================== -->
+
+            <h1>🔐 Caesar Cipher</h1>
+
+            <p class="subtitle">
+                Encrypt and decrypt your text easily
+            </p>
+
+
+            <!-- =========================
+                 MESSAGE INPUT
+            ========================== -->
+
+            <form method="POST">
+
+                <label for="message">
+                    Enter your message
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Type your message here..."
+                    required>{{ message }}</textarea>
+
+
+                <!-- =========================
+                     SHIFT VALUE
+                ========================== -->
+
+                <label for="shift">
+                    Shift Value
+                </label>
+
+                <input
+                    type="number"
+                    id="shift"
+                    name="shift"
+                    placeholder="Enter shift value"
+                    value="{{ shift }}"
+                    required>
+
+
+                <!-- =========================
+                     ENCRYPT / DECRYPT BUTTONS
+                ========================== -->
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="encrypt"
+                        class="encrypt-btn">
+
+                        🔒 Encrypt
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="decrypt"
+                        class="decrypt-btn">
+
+                        🔓 Decrypt
+
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- =========================
+                 RESULT BOX
+            ========================== -->
+
+            <div class="result-box">
+
+                <div class="result-header">
+
+                    <h2>Result</h2>
+
+
+                    <button
+                        type="button"
+                        onclick="copyResult()"
+                        class="copy-btn">
+
+                        📋 Copy
+
+                    </button>
+
+                </div>
+
+
+                <textarea
+                    id="result"
+                    readonly
+                    placeholder="Your encrypted or decrypted text will appear here...">{{ result }}</textarea>
+
+
+                <!-- Copy status message -->
+
+                <p id="copy-message"></p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        function copyResult() {
+
+            const result =
+                document.getElementById("result");
+
+            const copyMessage =
+                document.getElementById("copy-message");
+
+
+            /* Check if result is empty */
+
+            if (result.value.trim() === "") {
+
+                copyMessage.innerText =
+                    "Nothing to copy!";
+
+                return;
+            }
+
+
+            /* Copy result */
+
+            navigator.clipboard.writeText(result.value)
+                .then(function () {
+
+                    copyMessage.innerText =
+                        "✓ Copied to clipboard!";
+
+                })
+                .catch(function () {
+
+                    /* Fallback copy method */
+
+                    result.select();
+
+                    document.execCommand("copy");
+
+                    copyMessage.innerText =
+                        "✓ Copied to clipboard!";
+
+                });
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
