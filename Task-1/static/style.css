@@ -1,0 +1,380 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    font-family: Arial, sans-serif;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #141e30,
+        #243b55
+    );
+
+    padding: 20px;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+    width: 100%;
+    max-width: 600px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    background: white;
+
+    width: 100%;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+h1 {
+    text-align: center;
+
+    color: #1f2937;
+
+    font-size: 30px;
+
+    margin-bottom: 6px;
+}
+
+
+.subtitle {
+    text-align: center;
+
+    color: #6b7280;
+
+    font-size: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   LABELS
+========================= */
+
+label {
+    display: block;
+
+    font-weight: bold;
+
+    color: #374151;
+
+    font-size: 15px;
+
+    margin-bottom: 7px;
+}
+
+
+/* =========================
+   MESSAGE BOX
+========================= */
+
+textarea {
+    width: 100%;
+
+    min-height: 70px;
+
+    max-height: 250px;
+
+    border: 2px solid #d1d5db;
+
+    border-radius: 10px;
+
+    padding: 11px 13px;
+
+    font-size: 15px;
+
+    font-family: Arial, sans-serif;
+
+    outline: none;
+
+    resize: vertical;
+
+    margin-bottom: 18px;
+
+    overflow-y: auto;
+}
+
+
+/* Message box focus */
+
+textarea:focus {
+    border-color: #4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+
+/* =========================
+   SHIFT INPUT
+========================= */
+
+input {
+    width: 100%;
+
+    height: 45px;
+
+    border: 2px solid #d1d5db;
+
+    border-radius: 10px;
+
+    padding: 10px 13px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    margin-bottom: 18px;
+}
+
+
+input:focus {
+    border-color: #4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons {
+    display: flex;
+
+    gap: 12px;
+
+    width: 100%;
+}
+
+
+button {
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 11px 15px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+/* Encrypt */
+
+.encrypt-btn {
+    flex: 1;
+
+    background: #2563eb;
+
+    color: white;
+}
+
+
+.encrypt-btn:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+
+/* Decrypt */
+
+.decrypt-btn {
+    flex: 1;
+
+    background: #059669;
+
+    color: white;
+}
+
+
+.decrypt-btn:hover {
+    background: #047857;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   RESULT AREA
+========================= */
+
+.result-box {
+    margin-top: 22px;
+
+    padding-top: 20px;
+
+    border-top: 2px solid #e5e7eb;
+}
+
+
+/* Result heading + copy */
+
+.result-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 8px;
+}
+
+
+.result-header h2 {
+    color: #1f2937;
+
+    font-size: 20px;
+}
+
+
+/* =========================
+   RESULT TEXT BOX
+========================= */
+
+#result {
+    width: 100%;
+
+    min-height: 55px;
+
+    max-height: 200px;
+
+    background: #f8fafc;
+
+    border: 2px solid #d1d5db;
+
+    border-radius: 10px;
+
+    padding: 10px 12px;
+
+    font-size: 15px;
+
+    font-family: Arial, sans-serif;
+
+    resize: vertical;
+
+    outline: none;
+
+    overflow-y: auto;
+
+    margin-bottom: 5px;
+}
+
+
+/* =========================
+   COPY BUTTON
+========================= */
+
+.copy-btn {
+    background: #111827;
+
+    color: white;
+
+    padding: 7px 12px;
+
+    font-size: 13px;
+
+    border-radius: 8px;
+}
+
+
+.copy-btn:hover {
+    background: #374151;
+}
+
+
+/* =========================
+   COPY MESSAGE
+========================= */
+
+#copy-message {
+    color: #059669;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-top: 5px;
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 12px;
+    }
+
+
+    .card {
+        padding: 22px;
+    }
+
+
+    h1 {
+        font-size: 25px;
+    }
+
+
+    .subtitle {
+        font-size: 14px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .buttons {
+        flex-direction: column;
+    }
+
+
+    .encrypt-btn,
+    .decrypt-btn {
+        width: 100%;
+    }
+}
