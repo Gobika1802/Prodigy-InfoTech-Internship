@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Image Encryption</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Pixel Image Encryption</h1>
+        <p>Encrypt and decrypt your images securely.</p>
+
+        <form action="/encrypt" method="POST" enctype="multipart/form-data">
+            <label for="image">Choose an image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <label for="key">Enter encryption key:</label>
+            <input type="password" id="key" name="key" required>
+
+            <button type="submit">Encrypt Image</button>
+        </form>
+
+        <form action="/decrypt" method="POST" enctype="multipart/form-data">
+            <h2>Decrypt Image</h2>
+            <label for="encrypted_image">Choose encrypted image:</label>
+            <input type="file" id="encrypted_image" name="image" accept="image/*" required>
+
+            <label for="decrypt_key">Enter decryption key:</label>
+            <input type="password" id="decrypt_key" name="key" required>
+
+            <button type="submit">Decrypt Image</button>
+        </form>
+    </div>
+</body>
+</html>
