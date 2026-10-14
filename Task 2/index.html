@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PixelVault | Image Encryption</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="brand">
+        <div class="brand-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+                <path d="M24 3L42 10V22C42 33 34 41 24 45C14 41 6 33 6 22V10L24 3Z"
+                      stroke="currentColor" stroke-width="2.5"/>
+                <rect x="15" y="20" width="18" height="14" rx="3"
+                      fill="currentColor" opacity=".95"/>
+                <path d="M19 20V16C19 9 29 9 29 16V20"
+                      stroke="currentColor" stroke-width="3"/>
+                <circle cx="24" cy="26" r="2" fill="#10152E"/>
+                <path d="M24 28V30" stroke="#10152E" stroke-width="2"/>
+            </svg>
+        </div>
+
+        <span>Pixel<span class="brand-accent">Vault</span></span>
+    </a>
+
+    <div class="nav-right">
+        <span class="nav-label">PIXEL MANIPULATION</span>
+        <span class="task-badge">TASK 02</span>
+    </div>
+</header>
+
+
+<main class="main-container">
+
+    <section class="hero">
+
+        <div class="hero-content">
+            <div class="eyebrow">
+                <span class="live-dot"></span>
+                IMAGE SECURITY WORKSPACE
+            </div>
+
+            <h1>
+                Your images.<br>
+                <span>Your privacy.</span>
+            </h1>
+
+            <p>
+                Transform image pixels with a key.
+                Encrypt your images and restore them whenever you need.
+            </p>
+
+            <div class="hero-tags">
+                <span>✦ Pixel Processing</span>
+                <span>✦ Key-Based Demo</span>
+                <span>✦ Image Protection</span>
+            </div>
+        </div>
+
+        <div class="hero-art">
+            <div class="art-orbit orbit-one"></div>
+            <div class="art-orbit orbit-two"></div>
+
+            <div class="pixel pixel-one"></div>
+            <div class="pixel pixel-two"></div>
+            <div class="pixel pixel-three"></div>
+            <div class="pixel pixel-four"></div>
+            <div class="pixel pixel-five"></div>
+            <div class="pixel pixel-six"></div>
+
+            <div class="image-symbol">
+                <svg viewBox="0 0 120 100" fill="none">
+                    <rect x="7" y="7" width="106" height="86" rx="13"
+                          stroke="currentColor" stroke-width="2.5"/>
+                    <circle cx="38" cy="32" r="9" fill="#72D8FF"/>
+                    <path d="M17 78L43 50L59 66L74 45L103 78"
+                          fill="url(#mountain)"/>
+                    <defs>
+                        <linearGradient id="mountain" x1="20" y1="45"
+                                        x2="95" y2="90"
+                                        gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#8B5CF6"/>
+                            <stop offset="1" stop-color="#22D3EE"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <div class="art-lock">
+                <svg viewBox="0 0 60 70" fill="none">
+                    <rect x="9" y="29" width="42" height="34" rx="9"
+                          fill="#8B5CF6"/>
+                    <path d="M18 29V20C18 4 42 4 42 20V29"
+                          stroke="#D8D4FF" stroke-width="6"
+                          stroke-linecap="round"/>
+                    <circle cx="30" cy="43" r="5" fill="white"/>
+                    <path d="M30 47V53" stroke="white" stroke-width="4"
+                          stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+
+    </section>
+
+
+    {% if error %}
+    <div class="alert alert-error">
+        <span>⚠</span>
+        {{ error }}
+    </div>
+    {% endif %}
+
+    {% if success %}
+    <div class="alert alert-success">
+        <span>✓</span>
+        {{ success }}
+    </div>
+    {% endif %}
+
+
+    <div class="section-heading">
+        <div>
+            <span class="section-kicker">GET STARTED</span>
+            <h2>Your encryption workspace</h2>
+        </div>
+
+        <span class="secure-label">
+            <span class="live-dot"></span>
+            Ready to process
+        </span>
+    </div>
+
+
+    <section class="workspace">
+
+        <div class="panel upload-panel">
+
+            <div class="panel-heading">
+                <div class="heading-icon purple-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="3" width="18" height="18" rx="4"
+                              stroke="currentColor" stroke-width="1.8"/>
+                        <circle cx="8.5" cy="8.5" r="2"
+                                stroke="currentColor" stroke-width="1.8"/>
+                        <path d="M4 17L9 12L13 16L16 13L21 18"
+                              stroke="currentColor" stroke-width="1.8"
+                              stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <h3>Upload your image</h3>
+                    <p>Choose an image to begin processing.</p>
+                </div>
+            </div>
+
+
+            <form action="/encrypt"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  id="encrypt-form">
+
+                <label class="upload-area" for="image">
+
+                    <div class="upload-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M14 33H11C1 33 3 19 13 19C16 5 34 7 36 19C46 19 47 33 37 33H34"
+                                  stroke="currentColor" stroke-width="2.5"
+                                  stroke-linecap="round"/>
+                            <path d="M24 38V23M17 30L24 23L31 30"
+                                  stroke="currentColor" stroke-width="2.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+
+                    <strong id="file-title">Drop your image here</strong>
+                    <span id="file-subtitle">or click to browse files</span>
+
+                    <span class="file-types">
+                        PNG · JPG · JPEG · WEBP
+                    </span>
+
+                    <input type="file"
+                           id="image"
+                           name="image"
+                           accept=".png,.jpg,.jpeg,.webp"
+                           required>
+
+                </label>
+
+
+                <div class="field-heading">
+                    <label for="key">Encryption key</label>
+                    <span>8–128 characters</span>
+                </div>
+
+                <div class="input-wrap">
+                    <span class="input-icon">⌑</span>
+
+                    <input type="password"
+                           id="key"
+                           name="key"
+                           minlength="8"
+                           maxlength="128"
+                           placeholder="Create your encryption key"
+                           required>
+
+                    <button type="button"
+                            class="eye-button"
+                            data-target="key"
+                            aria-label="Show encryption key">
+                        ◉
+                    </button>
+                </div>
+
+                <p class="field-hint">
+                    <span>ⓘ</span>
+                    Remember this key. You need the same key to decrypt.
+                </p>
+
+                <button type="submit" class="primary-button">
+                    <span>🔒</span>
+                    Encrypt image
+                    <span class="button-arrow">↗</span>
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="right-column">
+
+            <section class="panel preview-panel">
+
+                <div class="panel-heading preview-heading">
+                    <div>
+                        <span class="section-kicker">IMAGE PREVIEW</span>
+                        <h3>Visual workspace</h3>
+                    </div>
+
+                    <span class="preview-indicator">LIVE PREVIEW</span>
+                </div>
+
+
+                <div class="preview-tabs">
+                    <button type="button"
+                            class="preview-tab active"
+                            data-preview="original">
+                        Original
+                    </button>
+
+                    <button type="button"
+                            class="preview-tab"
+                            data-preview="encrypted">
+                        Encrypted
+                    </button>
+
+                    <button type="button"
+                            class="preview-tab"
+                            data-preview="decrypted">
+                        Decrypted
+                    </button>
+                </div>
+
+
+                <div class="preview-stage">
+
+                    <div class="empty-state" id="empty-state">
+                        <div class="empty-image-icon">
+                            <svg viewBox="0 0 64 64" fill="none">
+                                <rect x="9" y="9" width="46" height="46"
+                                      rx="8" stroke="currentColor"
+                                      stroke-width="2"/>
+                                <circle cx="24" cy="24" r="5"
+                                        stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 46L26 32L35 41L42 34L53 45"
+                                      stroke="currentColor" stroke-width="2"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+
+                        <strong>No image selected</strong>
+                        <p>Your image preview will appear here.</p>
+                    </div>
+
+                    <img id="preview-image"
+                         class="preview-image"
+                         alt="Selected image preview"
+                         hidden>
+
+                </div>
+
+
+                <div class="preview-footer">
+                    <div>
+                        <span class="status-dot"></span>
+                        <span id="preview-status">Waiting for image</span>
+                    </div>
+
+                    <span id="preview-type">PNG / JPG / WEBP</span>
+                </div>
+
+
+                <a href="/download/encrypted"
+                   id="download-encrypted"
+                   class="download-button {% if not encrypted_ready %}disabled-link{% endif %}"
+                   {% if not encrypted_ready %}aria-disabled="true"{% endif %}>
+                    ↓ &nbsp; Download encrypted image
+                </a>
+
+            </section>
+
+
+            <section class="panel decrypt-panel">
+
+                <div class="panel-heading">
+                    <div class="heading-icon cyan-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect x="4" y="10" width="16" height="11"
+                                  rx="3" stroke="currentColor"
+                                  stroke-width="1.8"/>
+                            <path d="M8 10V7A4 4 0 0 1 16 7V10"
+                                  stroke="currentColor" stroke-width="1.8"/>
+                            <circle cx="12" cy="15" r="1.5"
+                                    fill="currentColor"/>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <h3>Decrypt your image</h3>
+                        <p>Restore your image using the same key.</p>
+                    </div>
+                </div>
+
+
+                {% if original_preview %}
+                <form action="/decrypt" method="POST">
+
+                    <div class="input-wrap">
+                        <span class="input-icon">⌑</span>
+
+                        <input type="password"
+                               id="decrypt-key"
+                               name="key"
+                               placeholder="Enter your encryption key"
+                               minlength="8"
+                               maxlength="128"
+                               required>
+
+                        <button type="button"
+                                class="eye-button"
+                                data-target="decrypt-key"
+                                aria-label="Show decryption key">
+                            ◉
+                        </button>
+                    </div>
+
+                    <button type="submit" class="decrypt-button">
+                        <span>🔓</span>
+                        Decrypt image
+                        <span class="button-arrow">↗</span>
+                    </button>
+
+                </form>
+
+                {% elif encrypted_ready %}
+                <form action="/decrypt" method="POST">
+
+                    <div class="input-wrap">
+                        <span class="input-icon">⌑</span>
+
+                        <input type="password"
+                               id="decrypt-key"
+                               name="key"
+                               placeholder="Enter your encryption key"
+                               required>
+                    </div>
+
+                    <button type="submit" class="decrypt-button">
+                        🔓 Decrypt image
+                    </button>
+
+                </form>
+
+                {% else %}
+
+                <div class="decrypt-placeholder">
+                    <span>🔑</span>
+                    <p>Encrypt an image first to enable decryption.</p>
+                </div>
+
+                {% endif %}
+
+
+                {% if decrypted_preview %}
+                <div class="decrypted-result">
+                    <span>✓</span>
+                    <div>
+                        <strong>Image restored</strong>
+                        <p>Your decrypted image is ready.</p>
+                    </div>
+                </div>
+
+                <a href="/download/decrypted" class="download-button">
+                    ↓ &nbsp; Download decrypted image
+                </a>
+                {% endif %}
+
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <section class="features">
+
+        <div class="feature-card feature-purple">
+            <div class="feature-icon">▦</div>
+            <div>
+                <h3>Pixel manipulation</h3>
+                <p>Transform image pixel data through mathematical operations.</p>
+            </div>
+        </div>
+
+        <div class="feature-card feature-blue">
+            <div class="feature-icon">⚿</div>
+            <div>
+                <h3>Key-based processing</h3>
+                <p>Use a key to control the reversible demonstration.</p>
+            </div>
+        </div>
+
+        <div class="feature-card feature-cyan">
+            <div class="feature-icon">⟳</div>
+            <div>
+                <h3>Image restoration</h3>
+                <p>Apply the same operation with the same key to restore pixels.</p>
+            </div>
+        </div>
+
+    </section>
+
+
+    <footer class="footer">
+        <a href="/" class="footer-brand">Pixel<span>Vault</span></a>
+
+        <p>Task 02 · Pixel Manipulation for Image Encryption</p>
+
+        <p class="footer-note">
+            Prodigy Infotech · Educational Demonstration
+        </p>
+    </footer>
+
+</main>
+
+
+<script>
+    const imageInput = document.getElementById("image");
+    const previewImage = document.getElementById("preview-image");
+    const emptyState = document.getElementById("empty-state");
+    const fileTitle = document.getElementById("file-title");
+    const fileSubtitle = document.getElementById("file-subtitle");
+    const previewStatus = document.getElementById("preview-status");
+    const previewType = document.getElementById("preview-type");
+
+    const previewTabs = document.querySelectorAll(".preview-tab");
+
+    const previews = {
+        original: {% if original_preview %}"data:image/png;base64,{{ original_preview }}"{% else %}null{% endif %},
+        encrypted: {% if encrypted_preview %}"data:image/png;base64,{{ encrypted_preview }}"{% else %}null{% endif %},
+        decrypted: {% if decrypted_preview %}"data:image/png;base64,{{ decrypted_preview }}"{% else %}null{% endif %}
+    };
+
+    const names = {
+        original: "Original image",
+        encrypted: "Encrypted image",
+        decrypted: "Decrypted image"
+    };
+
+    function showPreview(type) {
+        previewTabs.forEach(tab => {
+            tab.classList.toggle("active", tab.dataset.preview === type);
+        });
+
+        if (previews[type]) {
+            previewImage.src = previews[type];
+            previewImage.hidden = false;
+            emptyState.hidden = true;
+
+            previewStatus.textContent = names[type] + " ready";
+            previewType.textContent = "PNG IMAGE";
+        } else {
+            previewImage.hidden = true;
+            emptyState.hidden = false;
+
+            previewStatus.textContent =
+                type === "original" ? "Waiting for image" :
+                type === "encrypted" ? "Encrypt an image first" :
+                "Decrypt an image first";
+
+            previewType.textContent = "PNG / JPG / WEBP";
+        }
+    }
+
+    previewTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            showPreview(tab.dataset.preview);
+        });
+    });
+
+    imageInput.addEventListener("change", () => {
+        const file = imageInput.files[0];
+
+        if (!file) return;
+
+        fileTitle.textContent = file.name;
+        fileSubtitle.textContent =
+            (file.size / 1024).toFixed(1) + " KB · Selected";
+
+        const localUrl = URL.createObjectURL(file);
+
+        previewImage.src = localUrl;
+        previewImage.hidden = false;
+        emptyState.hidden = true;
+
+        previewStatus.textContent = "Image selected";
+        previewType.textContent = file.name.split(".").pop().toUpperCase();
+
+        previewTabs.forEach(tab => {
+            tab.classList.toggle("active", tab.dataset.preview === "original");
+        });
+    });
+
+    document.querySelectorAll(".eye-button").forEach(button => {
+        button.addEventListener("click", () => {
+            const input = document.getElementById(button.dataset.target);
+
+            input.type = input.type === "password" ? "text" : "password";
+        });
+    });
+
+    const uploadArea = document.querySelector(".upload-area");
+
+    ["dragenter", "dragover"].forEach(eventName => {
+        uploadArea.addEventListener(eventName, event => {
+            event.preventDefault();
+            uploadArea.classList.add("drag-active");
+        });
+    });
+
+    ["dragleave", "drop"].forEach(eventName => {
+        uploadArea.addEventListener(eventName, event => {
+            event.preventDefault();
+            uploadArea.classList.remove("drag-active");
+        });
+    });
+
+    uploadArea.addEventListener("drop", event => {
+        const files = event.dataTransfer.files;
+
+        if (files.length) {
+            imageInput.files = files;
+            imageInput.dispatchEvent(new Event("change"));
+        }
+    });
+
+    const encryptForm = document.getElementById("encrypt-form");
+
+    encryptForm.addEventListener("submit", () => {
+        const button = encryptForm.querySelector('button[type="submit"]');
+
+        button.disabled = true;
+        button.innerHTML = "⏳ Processing image...";
+    });
+
+    const decryptForm = document.querySelector(".decrypt-panel form");
+
+    if (decryptForm) {
+        decryptForm.addEventListener("submit", () => {
+            const button = decryptForm.querySelector('button[type="submit"]');
+
+            if (button) {
+                button.disabled = true;
+                button.innerHTML = "⏳ Decrypting image...";
+            }
+        });
+    }
+
+    if (previews.decrypted) {
+        showPreview("decrypted");
+    } else if (previews.encrypted) {
+        showPreview("encrypted");
+    } else if (previews.original) {
+        showPreview("original");
+    }
+</script>
+
+</body>
+</html>
