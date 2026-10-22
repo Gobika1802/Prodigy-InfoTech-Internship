@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f1f0f6">
+    <title>VaultCheck | Password Security</title>
+
+    <!-- Version query forces the browser to fetch the latest CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=20261022">
+</head>
+
+<body>
+    <header class="topbar">
+        <a href="/" class="brand">
+            <span class="brand-logo">V</span>
+            <span class="brand-copy">
+                VaultCheck
+                <small>PASSWORD SECURITY SUITE</small>
+            </span>
+        </a>
+
+        <div class="top-actions">
+            <span class="status-pill"><span class="status-dot"></span> SYSTEM READY</span>
+            <button id="themeButton" class="theme-button" type="button" aria-label="Switch theme">☾</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="eyebrow">YOUR PERSONAL SECURITY WORKSPACE</div>
+            <h1>Password security,<br><span>made simple.</span></h1>
+            <p>Check password strength, identify weaknesses and create stronger passwords with one simple tool.</p>
+        </section>
+
+        <div class="dashboard">
+            <section class="card analyzer">
+                <div class="card-heading">
+                    <div>
+                        <span class="section-number">01 — ANALYSIS</span>
+                        <h2>Password analyzer</h2>
+                        <p class="subtitle">Understand your password's strength.</p>
+                    </div>
+                    <span class="heading-icon">⌁</span>
+                </div>
+
+                <label class="field-label" for="password">ENTER PASSWORD</label>
+
+                <div class="password-field">
+                    <span class="input-icon">◆</span>
+                    <input
+                        id="password"
+                        type="password"
+                        maxlength="128"
+                        placeholder="Type a password to analyze"
+                        autocomplete="new-password"
+                        spellcheck="false"
+                        autocapitalize="off"
+                    >
+                    <button id="togglePassword" type="button" class="visibility-button" aria-label="Show password">Show</button>
+                </div>
+
+                <div class="field-footer">
+                    <span id="lengthCount">0 / 128 characters</span>
+                    <button id="clearButton" type="button" class="clear-button">Clear ×</button>
+                </div>
+
+                <div class="score-panel">
+                    <div class="gauge" id="gauge">
+                        <div class="gauge-inner">
+                            <strong id="scoreValue">0</strong>
+                            <span>OUT OF 100</span>
+                        </div>
+                    </div>
+                    <div class="score-description">
+                        <span class="mini-label">PASSWORD RATING</span>
+                        <h3 id="strengthText">Waiting for input</h3>
+                        <p id="feedback" aria-live="polite">Enter a password to begin your analysis.</p>
+                    </div>
+                </div>
+
+                <div class="progress-heading">
+                    <span>Strength score</span>
+                    <span id="scorePercent">0%</span>
+                </div>
+                <div class="meter" id="strengthProgress" role="progressbar" aria-label="Password strength score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div id="strengthBar"></div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="subheading">
+                    <h3>Security checklist</h3>
+                    <span id="criteriaCount">0 / 5</span>
+                </div>
+
+                <div class="criteria-grid">
+                    <div class="criterion" id="length"><span class="check">○</span><span>8+ characters</span></div>
+                    <div class="criterion" id="uppercase"><span class="check">○</span><span>Uppercase letter</span></div>
+                    <div class="criterion" id="lowercase"><span class="check">○</span><span>Lowercase letter</span></div>
+                    <div class="criterion" id="number"><span class="check">○</span><span>Number</span></div>
+                    <div class="criterion" id="special"><span class="check">○</span><span>Special character</span></div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="subheading">
+                    <h3>Analysis details</h3>
+                    <span class="mini-label">ESTIMATED</span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat">
+                        <span>Character variety</span>
+                        <strong id="varietyValue">0 types</strong>
+                    </div>
+                    <div class="stat">
+                        <span>Estimated entropy</span>
+                        <strong id="entropyValue">0 bits</strong>
+                    </div>
+                    <div class="stat">
+                        <span>Pattern warnings</span>
+                        <strong id="warningValue">None</strong>
+                    </div>
+                    <div class="stat">
+                        <span>Password length</span>
+                        <strong id="lengthValue">0 chars</strong>
+                    </div>
+                </div>
+
+                <div class="suggestions" id="suggestions" aria-live="polite">
+                    <strong>Recommendations</strong>
+                    <p>Your personalized recommendations will appear here.</p>
+                </div>
+            </section>
+
+            <aside class="right-column">
+                <section class="card generator">
+                    <div class="card-heading">
+                        <div>
+                            <span class="section-number">02 — GENERATION</span>
+                            <h2>Password generator</h2>
+                            <p class="subtitle">Create a new random password.</p>
+                        </div>
+                        <span class="heading-icon">✳</span>
+                    </div>
+
+                    <div class="range-heading">
+                        <label class="field-label" for="passwordLength">PASSWORD LENGTH</label>
+                        <output id="lengthOutput" for="passwordLength">20</output>
+                    </div>
+
+                    <input id="passwordLength" class="range" type="range" min="8" max="64" value="20">
+
+                    <div class="range-labels">
+                        <span>8 characters</span>
+                        <span>64 characters</span>
+                    </div>
+
+                    <div class="option-heading">CHARACTER OPTIONS</div>
+                    <div class="options">
+                        <label class="option"><input type="checkbox" id="includeUpper" checked><span>Uppercase</span></label>
+                        <label class="option"><input type="checkbox" id="includeLower" checked><span>Lowercase</span></label>
+                        <label class="option"><input type="checkbox" id="includeNumbers" checked><span>Numbers</span></label>
+                        <label class="option"><input type="checkbox" id="includeSymbols" checked><span>Symbols</span></label>
+                        <label class="option wide"><input type="checkbox" id="excludeAmbiguous"><span>Exclude similar characters (O, 0, l, 1)</span></label>
+                    </div>
+
+                    <div class="generated-preview">
+                        <div class="preview-heading">
+                            <span>GENERATED PASSWORD</span>
+                            <span class="preview-dot"></span>
+                        </div>
+                        <p id="generatedText">Your password will appear here.</p>
+                    </div>
+
+                    <button id="generateButton" type="button" class="primary-button">
+                        <span>✳</span> Generate password <span class="button-arrow">↗</span>
+                    </button>
+
+                    <button id="copyButton" type="button" class="secondary-button">
+                        ▣ &nbsp; Copy generated password
+                    </button>
+
+                    <p id="actionMessage" class="action-message" role="status"></p>
+                </section>
+
+                <section class="card guidance">
+                    <div class="card-heading">
+                        <div>
+                            <span class="section-number">03 — GUIDANCE</span>
+                            <h2>Security essentials</h2>
+                        </div>
+                        <span class="heading-icon">✓</span>
+                    </div>
+
+                    <div class="tip">
+                        <span class="tip-number">01</span>
+                        <div>
+                            <strong>Choose a longer password</strong>
+                            <p>Prefer long, unpredictable passwords or passphrases.</p>
+                        </div>
+                    </div>
+                    <div class="tip">
+                        <span class="tip-number">02</span>
+                        <div>
+                            <strong>Keep passwords unique</strong>
+                            <p>Use a different password for every account.</p>
+                        </div>
+                    </div>
+                    <div class="tip">
+                        <span class="tip-number">03</span>
+                        <div>
+                            <strong>Enable extra protection</strong>
+                            <p>Use multi-factor authentication whenever possible.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="privacy-card">
+                    <div class="privacy-icon">✓</div>
+                    <div>
+                        <strong>Privacy comes first</strong>
+                        <p>This interface analyzes your password in the browser. Do not enter a real account password into a demo tool.</p>
+                    </div>
+                </section>
+            </aside>
+        </div>
+
+        <footer>
+            <span class="footer-brand">VAULTCHECK <span>●</span></span>
+            <span>Password Complexity Checker · Internship Task 03</span>
+        </footer>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}?v=20261022"></script>
+</body>
+</html>
