@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Packet Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-icon">N</div>
+            <div>
+                <h1>Network Packet Analyzer</h1>
+                <p>Network monitoring dashboard</p>
+            </div>
+        </div>
+        <div class="status-badge">
+            <span id="statusDot" class="status-dot"></span>
+            <span id="captureStatus">Stopped</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="welcome">
+            <div>
+                <p class="eyebrow">NETWORK SECURITY TOOL</p>
+                <h2>Packet Monitoring Dashboard</h2>
+                <p>Monitor network traffic and inspect packet details in real time.</p>
+            </div>
+        </section>
+
+        <section class="control-panel panel">
+            <div class="section-heading">
+                <div>
+                    <h3>Capture Controls</h3>
+                    <p>Select a network interface to begin monitoring.</p>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="interface-control">
+                    <label for="interfaceSelect">Network Interface</label>
+                    <select id="interfaceSelect">
+                        <option value="">Loading interfaces...</option>
+                    </select>
+                </div>
+                <button id="startBtn" class="btn btn-primary">Start Capture</button>
+                <button id="stopBtn" class="btn btn-secondary" disabled>Stop Capture</button>
+                <button id="clearBtn" class="btn btn-outline">Clear Statistics</button>
+            </div>
+
+            <p id="message" class="message" role="status">Loading network interfaces...</p>
+        </section>
+
+        <section class="stats-grid">
+            <article class="stat-card panel">
+                <p>Total Packets</p>
+                <h3 id="totalPackets">0</h3>
+                <span>Captured packets</span>
+            </article>
+            <article class="stat-card panel">
+                <p>Total Data</p>
+                <h3 id="totalBytes">0 B</h3>
+                <span>Packet data volume</span>
+            </article>
+            <article class="stat-card panel">
+                <p>Protocols</p>
+                <h3 id="protocolTotal">0</h3>
+                <span>Protocol types detected</span>
+            </article>
+            <article class="stat-card panel">
+                <p>Active Interface</p>
+                <h3 id="activeInterface">—</h3>
+                <span>Selected adapter</span>
+            </article>
+        </section>
+
+        <section class="panel protocol-panel">
+            <div class="section-heading">
+                <div>
+                    <h3>Protocol Distribution</h3>
+                    <p>Number of packets detected for each protocol.</p>
+                </div>
+            </div>
+            <div id="protocolDistribution" class="protocol-list">
+                <p class="empty-state">No packets captured yet.</p>
+            </div>
+        </section>
+
+        <section class="panel packets-panel">
+            <div class="section-heading packet-heading">
+                <div>
+                    <h3>Captured Packets</h3>
+                    <p>Recent packet activity and connection details.</p>
+                </div>
+                <div class="filter-control">
+                    <label for="protocolFilter">Filter</label>
+                    <select id="protocolFilter">
+                        <option value="ALL">All Protocols</option>
+                        <option value="TCP">TCP</option>
+                        <option value="UDP">UDP</option>
+                        <option value="DNS">DNS</option>
+                        <option value="ICMP">ICMP</option>
+                        <option value="IP">IP</option>
+                        <option value="IPv6">IPv6</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Protocol</th>
+                            <th>Source</th>
+                            <th>Destination</th>
+                            <th>Source Port</th>
+                            <th>Destination Port</th>
+                            <th>Size</th>
+                        </tr>
+                    </thead>
+                    <tbody id="packetTableBody">
+                        <tr>
+                            <td colspan="7" class="empty-state">
+                                Start packet capture to view network activity.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-footer">
+                <span id="packetCountLabel">Showing 0 packets</span>
+                <span>Maximum stored records: 500</span>
+            </div>
+        </section>
+
+        <footer>
+            <p>Network Packet Analyzer · Use only on networks you own or are authorized to monitor.</p>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
